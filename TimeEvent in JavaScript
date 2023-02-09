@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>time Events</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script>
+        function LoadProduct() {
+            count++;
+            fetch(`http://fakestoreapi.com/products/${count}`)
+                .then(res => res.json())
+                .then(product => {
+                    document.getElementById("title").innerHTML = product.title;
+                    document.getElementById("pic").src = product.image;
+                })
+        }
+        function BodyLoad() {
+            LoadProduct(1);
+        }
+        var count = 1;
+        var slideshow;
+        function PlayClick() {
+            slideshow = setInterval(LoadProduct, 2000);
+            document.getElementById("status").innerHTML = "<b><i> SlideShow - Started </i></b>"
+        }
+        function PauseClick() {
+            clearInterval(slideshow);
+            document.getElementById("status").innerHTML = "<b><i> SlideShow - Stopped </i></b>"
+        }
+    </script>
+</head>
+
+<body onload="BodyLoad()" class="container-fluid d-flex justify-content-center">
+    <div class="card m-4 p-2" style="width:600px;">
+        <div class="card-header text-center">
+            <p id="title"></p>
+            <div id="status"></div>
+        </div>
+        <div class="card-body">
+            <img width="100%" id="pic" height="300">
+        </div>
+        <div class="card-footer text-center">
+            <button onclick="PlayClick()" class="btn btn-primary">
+                <span class="bi bi-play"></span>
+            </button>
+            <button onclick="PauseClick()" class="btn btn-danger">
+                <span class="bi bi-pause"></span>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>
